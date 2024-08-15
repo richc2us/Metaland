@@ -1,0 +1,17 @@
+{
+    "_id": "5f43e1f3e3b2f3b3b3b3b3b3",
+    "company_id": "",
+    "expense_type": "",
+    "amount": "",
+    "agent_id": "",
+    "lot_id": "",
+    "rollback_expense_id": "",
+    "percentage": "",
+    "explanation": "",
+    "expense_entered_date": "",
+    "receipt_image": "",
+    "approved_by": "",
+    "approve_date": "",
+    "paid_date": "",
+    "notes": ""
+}

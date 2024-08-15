@@ -1,0 +1,26 @@
+{
+    "_id": "5f5b3e3b7f1f3b001f3f3b3b",
+    "name": "Company Name",
+    "address": {
+        "address1": "",
+        "address2": "",
+        "region": "",
+        "province": "",
+        "city": "",
+        "barangay": "",
+        "zip": ""
+    },
+    "tin_no": "TIN No",
+    "contact": {
+        "last_name": "Last Name",
+        "first_name": "First Name",
+        "email": "Email",
+        "phone": "Phone",
+        "instagram": "Instagram",
+        "facebook": "Facebook",
+        "wechat": "WeChat",
+        "viber": "Viber",
+        "line": "Line",
+        "whatsapp": "WhatsApp"
+    }
+}

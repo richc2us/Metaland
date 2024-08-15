@@ -1,0 +1,18 @@
+{
+    "_id": "5c8f0f3f9b7e8e0b7c7f7b1d",
+    "company_id": "",
+    "buyer_id": "",
+    "lot_id": "",
+    "sequence": "",
+    "payment_type": "",
+    "date_collected": "",
+    "amount_paid": "",
+    "ack_recept": "",
+    "processed_by": "",
+    "processed_date": "",
+    "approved_by": "",
+    "approved_date": "",
+    "payment_image": "",
+    "notes": "",
+    "bank_reconciliation": ""
+}

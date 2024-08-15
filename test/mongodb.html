@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB Read/Write Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $.ajax( {
+            url: "https://ap-southeast-1.aws.data.mongodb-api.com/app/data-kaordzs/endpoint/data/v1/action/find",
+//            method: "POST",
+            type: "POST",
+            dataType: "jsonp",
+            processData: false,
+            data: JSON.stringify({
+                    'collection': 'movies',
+                    'database': 'sample_mflix',
+                    'dataSource':  'ServerlessInstance0', 
+                    'filter': {'rated': 'R'} 
+                }),
+            //    request.setRequestHeader("Content-Length", body)
+            ;
+            beforeSend: function(request) {
+                request.setRequestHeader("Content-Type", "application/json");
+                request.setRequestHeader("Access-Control-Request-Headers", "*");
+                request.setRequestHeader("api-key", "eYt9xTRdLrGavjc6bn4igKFxLwLZGxGgABRkEIOGlkCEsxEuh4VhdNkZpF9uFO6b");
+                alert('beforeSend');
+            },
+            success: function(response) {
+                alert(response);
+            },
+            error: function(xhr, status, error) {
+                alert(status, error);
+            }
+        })
+        /*
+        const xhr = new XMLHttpRequest();
+        const body = JSON.stringify({
+            'collection': 'movies',
+            'database': 'sample_mflix',
+            'dataSource':  'ServerlessInstance0', 
+            'filter': {'rated': 'R'} 
+        });
+        xhr.open("POST", "https://ap-southeast-1.aws.data.mongodb-api.com/app/data-kaordzs/endpoint/data/v1/action/find");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("Access-Control-Request-Headers", "*");
+        xhr.setRequestHeader("api-key", "eYt9xTRdLrGavjc6bn4igKFxLwLZGxGgABRkEIOGlkCEsxEuh4VhdNkZpF9uFO6b");
+        xhr.setRequestHeader("Content-Length", body);
+        x='';
+        xhr.onload = () => {
+        if (xhr.readyState == 4 && xhr.status == 201) {
+            console.log(JSON.parse(xhr.responseText));
+        } else {
+            console.log(`Error: ${xhr.status}`);
+        }
+        };
+        xhr.send(body);
+
+        alert(xhr.responseText);
+        */
+</script>
+</head>
+<body>
+    <h1>MongoDB Read/Write Example</h1>
+    <div>
+        <h2>Data</h2>
+        <pre id="data"></pre>
+    </div>
+    <div>
+        <h2>Send Data</h2>
+        <form onsubmit="event.preventDefault(); sendData();">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+            <br>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</body>
+</html>

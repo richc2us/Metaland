@@ -1,0 +1,85 @@
+{
+    "_id": {
+        "$oid": "66ad83096f4af249b604d60d"
+    },
+    "group_id": "00001",
+    "buyer": {
+        "last_name": "",
+        "first_name": "",
+        "middle_name": "",
+        "person_entiry": "",
+        "tin_no": "",
+        "id": [
+            {
+                "type": "",
+                "number": "",
+                "image_front": "",
+                "image_back": ""
+            },
+            {
+                "type": "",
+                "number": "",
+                "image_front": "",
+                "image_back": ""
+            }
+        ],
+        "email": "",
+        "phone": "",
+        "social_media": {
+            "instagram": "",
+            "facebook": "",
+            "wechat": "",
+            "viber": "",
+            "line": "",
+            "whatsapp": ""
+        }
+    },
+    "marital_status": "",
+    "spouse": {
+        "last_name": "",
+        "first_name": "",
+        "middle_name": "",
+        "person_entiry": "",
+        "tin_no": "",
+        "id": [
+            {
+                "type": "",
+                "number": "",
+                "image_front": "",
+                "image_back": ""
+            },
+            {
+                "type": "",
+                "number": "",
+                "image_front": "",
+                "image_back": ""
+            }
+        ],
+        "email": "",
+        "phone": "",
+        "instagram": "",
+        "facebook": "",
+        "wechat": "",
+        "viber": "",
+        "line": "",
+        "whatsapp": "",
+        "marital_status": ""
+    },
+    "address": {
+        "address1": "",
+        "address2": "",
+        "region": "",
+        "province": "",
+        "city": "",
+        "barangay": "",
+        "zip": ""
+    },
+    "bank": {
+        "name": "",
+        "branch": "",
+        "phone": "",
+        "account_name": "",
+        "account_no": ""
+    },
+    "preferred_payment_method": ""
+}

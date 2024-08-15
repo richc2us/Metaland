@@ -1,0 +1,34 @@
+
+{
+    "_id": "5f43e1f3e3b2f3b3b3b3b3b3",
+    "company_id": "",
+    "agend_id": "",
+    "agent_type": "",
+    "contact": {
+        "last_name": "",
+        "first_name": "",
+        "middle_name": "",
+        "email": "",
+        "phone": "",
+        "instagram": "",
+        "facebook": "",
+        "wechat": "",
+        "viber": "",
+        "line": "",
+        "whatsapp": ""
+    },
+    "realty": "",
+    "team_leader": "",
+    "address": {
+        "address1": "",
+        "address2": "",
+        "region": "",
+        "province": "",
+        "city": "",
+        "barangay": "",
+        "zip": ""
+    },
+    "tin_no": "",  
+    "commission_percentage": "",
+    "pay_scheme": ""
+}

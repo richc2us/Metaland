@@ -1,0 +1,33 @@
+{
+    "_id": "5f8f1b3b9f1f3b0b3c1b1b1b",
+    "project_id": "",
+    "lot_id": "",
+    "block_number": "",
+    "lot_number": "",
+    "coordinates": [
+        {
+            "latitude": "",
+            "longitude": ""
+        }
+    ],
+    "lot_sqm": "",
+    "price_per_sqm": "",
+    "lot_condition": "",
+    "listed_price": "",
+    "lot_premium": "",
+    "discount": "",
+    "status": "",
+    "buyer_id": "", 
+    "agent_id": "", 
+    "contract_price": "",
+    "date_sold": "",
+    "payment_scheme": "",
+    "date_of_the_month_dues": "",
+    "special_stipulation": "",
+    "restriction": "",
+    "vat": "",
+    "transfer_tax": "",
+    "buyer_seller_pay_tax": "",
+    "transfer_date": "",
+    "transfer_by": ""
+}
