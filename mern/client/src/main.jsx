@@ -8,7 +8,8 @@ import App from "./App";
 import Record from "./components/Record";
 import Buyer from "./components/Buyer";
 import Agent from "./components/Agent";
-import Project from "./components/Project";
+import ProjectIndex from "./components/Projects/ProjectIndex";
+import ProjectAddEdit from "./components/Projects/ProjectAddEdit";
 import Lot from "./components/Lot";
 import RecordList from "./components/RecordList";
 import BuyerList from "./components/BuyerList";
@@ -66,12 +67,20 @@ const router = createBrowserRouter([
     ],
   },  
   {
-    path: "/createProject",
+    path: "/projects",
     element: <App />,
     children: [
       {
-        path: "/createProject",
-        element: <Project />,
+        path: "",
+        element: <ProjectIndex />,
+      },
+      {
+        path: "add",
+        element: <ProjectAddEdit />,
+      },
+      {
+        path: "edit/:id",
+        element: <ProjectAddEdit />,
       },
     ],
   },  
