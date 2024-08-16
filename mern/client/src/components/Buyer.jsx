@@ -108,7 +108,7 @@ export default function Buyer() {
   async function onSubmit(e) {
     e.preventDefault();
     const person = { ...form };
-    alert(JSON.stringify(person));
+    // alert(JSON.stringify(person));
     try {
       let response;
       if (isNew) {
@@ -186,7 +186,7 @@ export default function Buyer() {
           account_no: "",
         }
       });
-      navigate("/");
+      navigate("/BuyerList");
     }
   }
 
@@ -345,6 +345,154 @@ export default function Buyer() {
                       placeholder="Phone Number (e.g. 09171234567)"
                       value={form.buyer.phone}
                       onChange={(e) => updateForm('buyer.phone', e.target.value )}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="address1"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Address 1
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="address1"
+                      id="address1"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Address 1"
+                      value={form.address.address1}
+                      onChange={(e) => updateForm('address.address1', e.target.value )}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="address2"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Address 2
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="address2"
+                      id="address2"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Address 2"
+                      value={form.address.address2}
+                      onChange={(e) => updateForm('address.address2', e.target.value )}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="region"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Region
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="region"
+                      id="region"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Region (i.e. NCR, CAR, etc.)"
+                      value={form.address.region}
+                      onChange={(e) => updateForm('address.region', e.target.value )}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="province"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Province
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="province"
+                      id="province"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Province (i.e. Cebu, Batangas, etc.)"
+                      value={form.address.province}
+                      onChange={(e) => updateForm('address.province', e.target.value )}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="city"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  City
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="city"
+                      id="city"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="City (i.e. Manila, Cebu City, etc.)"
+                      value={form.address.city}
+                      onChange={(e) => updateForm('address.city', e.target.value )}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="barangay"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Barangay
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="barangay"
+                      id="barangay"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Barangay (i.e. San Antonio, Apas, etc.)"
+                      value={form.address.barangay}
+                      onChange={(e) => updateForm('address.barangay', e.target.value )}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="zip"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Zip
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="zip"
+                      id="zip"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Zip Code (i.e. 6000, 1000, etc.)"
+                      value={form.address.zip}
+                      onChange={(e) => updateForm('address.zip', e.target.value )}
                     />
                   </div>
                 </div>

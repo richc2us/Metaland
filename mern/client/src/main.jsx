@@ -11,6 +11,7 @@ import Agent from "./components/Agent";
 import Project from "./components/Project";
 import Lot from "./components/Lot";
 import RecordList from "./components/RecordList";
+import BuyerList from "./components/BuyerList";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -21,6 +22,16 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <RecordList />,
+      },
+    ],
+  },
+  {
+    path: "/BuyerList",
+    element: <App />,
+    children: [
+      {
+        path: "/BuyerList",
+        element: <BuyerList />,
       },
     ],
   },
@@ -81,6 +92,16 @@ const router = createBrowserRouter([
       {
         path: "/edit/:id",
         element: <Record />,
+      },
+    ],
+  },
+  {
+    path: "/BuyerEdit/:id",
+    element: <App />,
+    children: [
+      {
+        path: "/BuyerEdit/:id",
+        element: <Buyer />,
       },
     ],
   },

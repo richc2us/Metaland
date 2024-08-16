@@ -54,7 +54,7 @@ router.patch("/:id", async (req, res) => {
       $set: {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
-        position: req.body.position,
+        email: req.body.email,
         level: req.body.level,
       },
     };

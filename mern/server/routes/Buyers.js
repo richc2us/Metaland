@@ -30,8 +30,8 @@ router.get("/:id", async (req, res) => {
 
 // This section will help you create a new record.
 router.post("/", async (req, res) => {
-  console.log(req.body);
-  console.log(req.body.buyer.middle_name);
+//  console.log(req.body);
+//  console.log(req.body.buyer.middle_name);
   try {
     let newDocument = {
         group_id: req.body.group_id,
@@ -84,39 +84,39 @@ router.patch("/:id", async (req, res) => {
     const query = { _id: new ObjectId(req.params.id) };
     const updates = {
       $set: {
-        group_id: "",
+        group_id: req.body.group_id,
         buyer: {
-          last_name: "",
-          first_name: "",
-          middle_name: "",
-          person_entity: "",
-          tin_no: "",
-          email: "",
-          phone: "",
+          last_name: req.body.buyer.last_name,
+          first_name: req.body.buyer.first_name,
+          middle_name: req.body.buyer.middle_name,
+          person_entity: req.body.buyer.person_entity,
+          tin_no: req.body.buyer.tin_no,
+          email: req.body.buyer.email, 
+          phone: req.body.buyer.phone,
           id: { 
-            type: "",
-            number: "",
-            img_front: "",
-            imb_back: ""
+            type: req.body.buyer.id.type,
+            number: req.body.buyer.id.number,
+            img_front: req.body.buyer.id.img_front,
+            imb_back: req.body.buyer.id.imb_back
           }
         },
         address: {
-          address1: "",
-          address2: "",
-          region: "",
-          province: "",
-          city: "",
-          barangay: "",
-          zip: "",
+          address1: req.body.address.address1,
+          address2: req.body.address.address2,
+          region: req.body.address.region,
+          province: req.body.address.province,
+          city: req.body.address.city,
+          barangay: req.body.address.barangay,
+          zip: req.body.address.zip,
         },
         bank: {
-          name: "",
-          branch: "",
-          phone: "",
-          account_name: "",
-          account_no: "",
-        }
-      },
+          name: req.body.bank.name,
+          branch: req.body.bank.branch,
+          phone: req.body.bank.phone,
+          account_name: req.body.bank.account_name,
+          account_no: req.body.bank.account_no,
+        },
+      }
     };
 
     let collection = await db.collection("Buyers");
