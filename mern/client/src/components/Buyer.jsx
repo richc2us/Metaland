@@ -3,9 +3,53 @@ import { useParams, useNavigate } from "react-router-dom";
 
 export default function Buyer() {
   const [form, setForm] = useState({
-    name: "",
-    position: "",
-    level: "",
+    group_id: "",
+    buyer: {
+      last_name: "",
+      first_name: "",
+      middle_name: "",
+      person_entity: "",
+      tin_no: "",
+      email: "",
+      phone: "",
+      id: { 
+        type: "",
+        number: "",
+        img_front: "",
+        img_back: ""
+      }
+    },
+    spouse: {
+      last_name: "",
+      first_name: "",
+      middle_name: "",
+      person_entity: "",
+      tin_no: "",
+      email: "",
+      phone: "",
+      id: { 
+        type: "",
+        number: "",
+        img_front: "",
+        img_back: ""
+      }
+    },
+    address: {
+      address1: "",
+      address2: "",
+      region: "",
+      province: "",
+      city: "",
+      barangay: "",
+      zip: "",
+    },
+    bank: {
+      name: "",
+      branch: "",
+      phone: "",
+      account_name: "",
+      account_no: "",
+    }
   });
   const [isNew, setIsNew] = useState(true);
   const params = useParams();
@@ -17,7 +61,7 @@ export default function Buyer() {
       if(!id) return;
       setIsNew(false);
       const response = await fetch(
-        `http://localhost:5050/record/${params.id.toString()}`
+        `http://localhost:5050/Buyers/${params.id.toString()}`
       );
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
@@ -37,21 +81,39 @@ export default function Buyer() {
   }, [params.id, navigate]);
 
   // These methods will update the state properties.
+ /*
   function updateForm(value) {
     return setForm((prev) => {
       return { ...prev, ...value };
     });
   }
+*/
+  const updateForm = (path, value) => {
+    setForm((prevForm) => {
+      const keys = path.split('.');
+      const lastKey = keys.pop();
+      const nestedObject = keys.reduce((obj, key) => obj[key], prevForm);
+
+      return {
+        ...prevForm,
+        [keys[0]]: {
+          ...nestedObject,
+          [lastKey]: value
+        }
+      };
+    });
+  };
 
   // This function will handle the submission.
   async function onSubmit(e) {
     e.preventDefault();
     const person = { ...form };
+    alert(JSON.stringify(person));
     try {
       let response;
       if (isNew) {
         // if we are adding a new record we will POST to /record.
-        response = await fetch("http://localhost:5050/record", {
+        response = await fetch("http://localhost:5050/Buyers", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -60,7 +122,7 @@ export default function Buyer() {
         });
       } else {
         // if we are updating a record we will PATCH to /record/:id.
-        response = await fetch(`http://localhost:5050/record/${params.id}`, {
+        response = await fetch(`http://localhost:5050/Buyers/${params.id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -75,7 +137,55 @@ export default function Buyer() {
     } catch (error) {
       console.error('A problem occurred adding or updating a record: ', error);
     } finally {
-      setForm({ name: "", position: "", level: "" });
+      setForm({
+        group_id: "",
+        buyer: {
+          last_name: "",
+          first_name: "",
+          middle_name: "",
+          person_entity: "",
+          tin_no: "",
+          email: "",
+          phone: "",
+          id: { 
+            type: "",
+            number: "",
+            img_front: "",
+            imb_back: ""
+          }
+        },
+        spouse: {
+          last_name: "",
+          first_name: "",
+          middle_name: "",
+          person_entity: "",
+          tin_no: "",
+          email: "",
+          phone: "",
+          id: { 
+            type: "",
+            number: "",
+            img_front: "",
+            imb_back: ""
+          }
+        },        
+        address: {
+          address1: "",
+          address2: "",
+          region: "",
+          province: "",
+          city: "",
+          barangay: "",
+          zip: "",
+        },
+        bank: {
+          name: "",
+          branch: "",
+          phone: "",
+          account_name: "",
+          account_no: "",
+        }
+      });
       navigate("/");
     }
   }
@@ -86,247 +196,160 @@ export default function Buyer() {
       <h3 className="text-lg font-semibold p-4">Create/Update Buyer Record</h3>
       <form
         onSubmit={onSubmit}
-        className="border rounded-lg overflow-hidden p-4"
+        className="border rounded-lg overflow-hidden p-2"
       >
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2">
           <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 ">
-            <div className="sm:col-span-4">
-              <label
-                htmlFor="first_name"
-                className="block text-sm font-medium leading-6 text-slate-900"
-              >
-                First Name
-              </label>
-              <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input
-                    type="text"
-                    name="first_name"
-                    id="first_name"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="First Name"
-                    value={form.first_name}
-                    onChange={(e) => updateForm({ first_name: e.target.value })}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="sm:col-span-4">
-              <label
-                htmlFor="last_name"
-                className="block text-sm font-medium leading-6 text-slate-900"
-              >
-                Last Name
-              </label>
-              <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input
-                    type="text"
-                    name="last_name"
-                    id="last_name"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Last Name"
-                    value={form.last_name}
-                    onChange={(e) => updateForm({ last_name: e.target.value })}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="sm:col-span-4">
-              <label
-                htmlFor="position"
-                className="block text-sm font-medium leading-6 text-slate-900"
-              >
-                Position
-              </label>
-              <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input
-                    type="text"
-                    name="position"
-                    id="position"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Developer Advocate"
-                    value={form.position}
-                    onChange={(e) => updateForm({ position: e.target.value })}
-                  />
-                </div>
-              </div>
-            </div>
+
             <div>
-              <fieldset className="mt-4">
-                <legend className="sr-only">Position Options</legend>
-                <div className="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                  <div className="flex items-center">
+                <div className="sm:col-span-4">
+                <label
+                  htmlFor="first_name"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  First Name
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     <input
-                      id="positionIntern"
-                      name="positionOptions"
-                      type="radio"
-                      value="Intern"
-                      className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
-                      checked={form.level === "Intern"}
-                      onChange={(e) => updateForm({ level: e.target.value })}
+                      type="text"
+                      name="first_name"
+                      id="first_name"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="First Name"
+                      value={form.buyer.first_name}
+                      onChange={(e) => updateForm('buyer.first_name', e.target.value )}
                     />
-                    <label
-                      htmlFor="positionIntern"
-                      className="ml-3 block text-sm font-medium leading-6 text-slate-900 mr-4"
-                    >
-                      Intern
-                    </label>
-                    <input
-                      id="positionJunior"
-                      name="positionOptions"
-                      type="radio"
-                      value="Junior"
-                      className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
-                      checked={form.level === "Junior"}
-                      onChange={(e) => updateForm({ level: e.target.value })}
-                    />
-                    <label
-                      htmlFor="positionJunior"
-                      className="ml-3 block text-sm font-medium leading-6 text-slate-900 mr-4"
-                    >
-                      Junior
-                    </label>
-                    <input
-                      id="positionSenior"
-                      name="positionOptions"
-                      type="radio"
-                      value="Senior"
-                      className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
-                      checked={form.level === "Senior"}
-                      onChange={(e) => updateForm({ level: e.target.value })}
-                    />
-                    <label
-                      htmlFor="positionSenior"
-                      className="ml-3 block text-sm font-medium leading-6 text-slate-900 mr-4"
-                    >
-                      Senior
-                    </label>
                   </div>
                 </div>
- 
-              </fieldset>
-            </div>
-          </div>
-          <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 ">
-            <div className="sm:col-span-4">
-              <label
-                htmlFor="first_name"
-                className="block text-sm font-medium leading-6 text-slate-900"
-              >
-                First Name
-              </label>
-              <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input
-                    type="text"
-                    name="first_name"
-                    id="first_name"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="First Name"
-                    value={form.first_name}
-                    onChange={(e) => updateForm({ first_name: e.target.value })}
-                  />
-                </div>
               </div>
-            </div>
-            <div className="sm:col-span-4">
-              <label
-                htmlFor="last_name"
-                className="block text-sm font-medium leading-6 text-slate-900"
-              >
-                Last Name
-              </label>
-              <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input
-                    type="text"
-                    name="last_name"
-                    id="last_name"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Last Name"
-                    value={form.last_name}
-                    onChange={(e) => updateForm({ last_name: e.target.value })}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="sm:col-span-4">
-              <label
-                htmlFor="position"
-                className="block text-sm font-medium leading-6 text-slate-900"
-              >
-                Position
-              </label>
-              <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input
-                    type="text"
-                    name="position"
-                    id="position"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Developer Advocate"
-                    value={form.position}
-                    onChange={(e) => updateForm({ position: e.target.value })}
-                  />
-                </div>
-              </div>
-            </div>
-            <div>
-              <fieldset className="mt-4">
-                <legend className="sr-only">Position Options</legend>
-                <div className="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
-                  <div className="flex items-center">
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="middle_name"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Middle Name
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     <input
-                      id="positionIntern"
-                      name="positionOptions"
-                      type="radio"
-                      value="Intern"
-                      className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
-                      checked={form.level === "Intern"}
-                      onChange={(e) => updateForm({ level: e.target.value })}
+                      type="text"
+                      name="middle_name"
+                      id="middle_name"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Middle Name"
+                      value={form.buyer.middle_name}
+                      onChange={(e) => updateForm('buyer.middle_name', e.target.value )}
                     />
-                    <label
-                      htmlFor="positionIntern"
-                      className="ml-3 block text-sm font-medium leading-6 text-slate-900 mr-4"
-                    >
-                      Intern
-                    </label>
-                    <input
-                      id="positionJunior"
-                      name="positionOptions"
-                      type="radio"
-                      value="Junior"
-                      className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
-                      checked={form.level === "Junior"}
-                      onChange={(e) => updateForm({ level: e.target.value })}
-                    />
-                    <label
-                      htmlFor="positionJunior"
-                      className="ml-3 block text-sm font-medium leading-6 text-slate-900 mr-4"
-                    >
-                      Junior
-                    </label>
-                    <input
-                      id="positionSenior"
-                      name="positionOptions"
-                      type="radio"
-                      value="Senior"
-                      className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
-                      checked={form.level === "Senior"}
-                      onChange={(e) => updateForm({ level: e.target.value })}
-                    />
-                    <label
-                      htmlFor="positionSenior"
-                      className="ml-3 block text-sm font-medium leading-6 text-slate-900 mr-4"
-                    >
-                      Senior
-                    </label>
                   </div>
                 </div>
- 
-              </fieldset>
+              </div>
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="last_name"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Last Name
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="last_name"
+                      id="last_name"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Last Name"
+                      value={form.buyer.last_name}
+                      onChange={(e) => updateForm('buyer.last_name', e.target.value )}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="sm:col-span-1">
+                <label
+                  htmlFor="person_entity"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Person / Entity
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="person_entity"
+                      id="person_entity"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Person or Entity"
+                      value={form.buyer.person_entity}
+                      onChange={(e) => updateForm('buyer.person_entity', e.target.value )}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="sm:col-span-1">
+                <label
+                  htmlFor="tin_no"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  TIN Number
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="tin_no"
+                      id="tin_no"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="TIN Number"
+                      value={form.buyer.tin_no}
+                      onChange={(e) => updateForm('buyer.tin_no', e.target.value )}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="sm:col-span-1">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Email
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="email"
+                      id="email"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Email"
+                      value={form.buyer.email}
+                      onChange={(e) => updateForm('buyer.email', e.target.value )}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Phone Number
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="phone_number"
+                      id="phone_number"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Phone Number (e.g. 09171234567)"
+                      value={form.buyer.phone}
+                      onChange={(e) => updateForm('buyer.phone', e.target.value )}
+                    />
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
