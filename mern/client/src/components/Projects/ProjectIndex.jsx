@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { getApiUrl } from "../../api";
 
 const ProjectItem = ({record, deleteRecord}) => (
   <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
@@ -55,7 +56,7 @@ export default function ProjectIndex() {
   // This method fetches the records from the database.
   useEffect(() => {
     async function getRecords() {
-      const response = await fetch(`http://localhost:5050/projects`);
+      const response = await fetch(getApiUrl('/projects'));
       if (!response.ok) {
         const message = `An error occurred: Project Index ${response.statusText}`;
         console.error(message);
@@ -70,7 +71,7 @@ export default function ProjectIndex() {
 
   // This method will delete a record
   async function deleteRecord(id) {
-    await fetch(`http://localhost:5050/projects/${id}`, {
+    await fetch(getApiUrl(`/projects/${id}`), {
       method: "DELETE",
     });
     const newRecords = records.filter((el) => el._id !== id);
@@ -103,7 +104,7 @@ export default function ProjectIndex() {
       let response;
       if (isNew) {
         // if we are adding a new record we will POST to /record.
-        response = await fetch("http://localhost:5050/projects", {
+        response = await fetch(getApiUrl('/projects'), {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -112,7 +113,7 @@ export default function ProjectIndex() {
         });
       } else {
         // if we are updating a record we will PATCH to /record/:id.
-        response = await fetch(`http://localhost:5050/project/${params.id}`, {
+        response = await fetch(getApiUrl(`/project/${params.id}`), {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",

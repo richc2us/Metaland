@@ -4,13 +4,11 @@ const API = {
 
 const getApiUrl = (pathname) =>  {
     let url = ""
-    switch(process.env.NODE_ENV) {
-        case 'production':
+    if(import.meta.env.PROD) {
             url = process.env.API_SERVER + pathname
-        break;
-        default:
+    } else {
             url = `http://localhost:5050${pathname}`
-        break;
+            // url = import.meta.env.API_SERVER + pathname
     }
     return url;
 }
