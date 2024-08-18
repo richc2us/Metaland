@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+import { getApiUrl } from "../api";
 export default function Buyer() {
   const [form, setForm] = useState({
     group_id: "",
@@ -60,9 +60,7 @@ export default function Buyer() {
       const id = params.id?.toString() || undefined;
       if(!id) return;
       setIsNew(false);
-      const response = await fetch(
-        `http://localhost:5050/Buyers/${params.id.toString()}`
-      );
+      const response = await fetch(getApiUrl(`/Buyers/${params.id.toString()}`));
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
         console.error(message);
@@ -113,7 +111,7 @@ export default function Buyer() {
       let response;
       if (isNew) {
         // if we are adding a new record we will POST to /record.
-        response = await fetch("http://localhost:5050/Buyers", {
+        response = await fetch(getApiUrl('/Buyers'), {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -122,7 +120,7 @@ export default function Buyer() {
         });
       } else {
         // if we are updating a record we will PATCH to /record/:id.
-        response = await fetch(`http://localhost:5050/Buyers/${params.id}`, {
+        response = await fetch(getApiUrl(`/Buyers/${params.id}`), {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
