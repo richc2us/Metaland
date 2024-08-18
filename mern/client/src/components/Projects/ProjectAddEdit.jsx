@@ -1,20 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import projectSchema from "./projectSchema";
 
 export default function ProjectAddEdit() {
-  const [form, setForm] = useState({
-    project_id : "",
-    company_id : "",
-    name: "",
-    address1 : "",
-    address2: "",
-    region: "",
-    province: "",
-    city: "",
-    barangay: "",
-    zip: "",
-    landmark : ""
-  });
+  const [form, setForm] = useState(projectSchema);
   const [isNew, setIsNew] = useState(true);
   const params = useParams();
   const navigate = useNavigate();
@@ -38,19 +27,7 @@ export default function ProjectAddEdit() {
         navigate("/");
         return;
       }
-      setForm({
-        project_id : record.project_id,
-        company_id : record.company_id,
-        name: record.name,
-        address1 : record.address.address1,
-        address2: record.address.address2,
-        region: record.address.region,
-        province: record.address.province,
-        city: record.address.city,
-        barangay: record.address.barangay,
-        zip: record.address.zip,
-        landmark : record.landmark,
-      });
+      setForm(record);
     }
     fetchData();
     return;
@@ -108,7 +85,7 @@ export default function ProjectAddEdit() {
         onSubmit={onSubmit}
         className="border rounded-lg overflow-hidden p-4"
       >
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2 p-2">
           <div>
             <h2 className="text-base font-semibold leading-7 text-slate-900">
               Project Info
@@ -193,7 +170,7 @@ export default function ProjectAddEdit() {
 
         </div>
 
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2 p-2">
             <div>
                 <h2 className="text-base font-semibold leading-7 text-slate-900">
                 Address Info
@@ -218,9 +195,9 @@ export default function ProjectAddEdit() {
                     id="address1"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Address 1"
-                    value={form.address1}
+                    value={form.address.address1}
                     required
-                    onChange={(e) => updateForm({ address1: e.target.value })}
+                    onChange={(e) => updateForm({ address: {...form.address, address1 : e.target.value} })}
                   />
                 </div>
               </div>
@@ -240,9 +217,9 @@ export default function ProjectAddEdit() {
                     id="address2"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Address 2"
-                    value={form.address2}
+                    value={form.address.address2}
                     required
-                    onChange={(e) => updateForm({ address2: e.target.value })}
+                    onChange={(e) => updateForm({ address: {...form.address , address2: e.target.value} })}
                   />
                 </div>
               </div>
@@ -262,9 +239,9 @@ export default function ProjectAddEdit() {
                     id="region"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Region"
-                    value={form.region}
+                    value={form.address.region}
                     required
-                    onChange={(e) => updateForm({ region: e.target.value })}
+                    onChange={(e) => updateForm({ address: {...form.address , region: e.target.value} })}
                   />
                 </div>
               </div>
@@ -285,9 +262,9 @@ export default function ProjectAddEdit() {
                     id="province"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Province"
-                    value={form.province}
+                    value={form.address.province}
                     required
-                    onChange={(e) => updateForm({ province: e.target.value })}
+                    onChange={(e) => updateForm({ address: {...form.address , province: e.target.value} })}
                   />
                 </div>
               </div>
@@ -308,9 +285,9 @@ export default function ProjectAddEdit() {
                     id="text"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="City"
-                    value={form.city}
+                    value={form.address.city}
                     required
-                    onChange={(e) => updateForm({ city: e.target.value })}
+                    onChange={(e) => updateForm({ address: {...form.address , city: e.target.value} })}
                   />
                 </div>
               </div>
@@ -331,9 +308,9 @@ export default function ProjectAddEdit() {
                     id="barangay"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Barangay"
-                    value={form.barangay}
+                    value={form.address.barangay}
                     required
-                    onChange={(e) => updateForm({ barangay: e.target.value })}
+                    onChange={(e) => updateForm({ address: {...form.address , barangay: e.target.value} })}
                   />
                 </div>
               </div>
@@ -354,42 +331,182 @@ export default function ProjectAddEdit() {
                     id="zip"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Zip"
-                    value={form.zip}
+                    value={form.address.zip}
                     required
-                    onChange={(e) => updateForm({ zip: e.target.value })}
+                    onChange={(e) => updateForm({ address: {...form.address , zip: e.target.value} })}
                   />
                 </div>
               </div>
             </div>
-
-            <div className="sm:col-span-4">
-              <label
-                htmlFor="landmark"
-                className="block text-sm font-medium leading-6 text-slate-900"
-              >
-                Landmark
-              </label>
-              <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input
-                    type="text"
-                    name="landmark"
-                    id="landmark"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Landmark"
-                    value={form.landmark}
-                    required
-                    onChange={(e) => updateForm({ landmark: e.target.value })}
-                  />
-                </div>
-              </div>
-            </div>
-
-            
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2">
+
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2 p-2">
+            <div>
+                <h2 className="text-base font-semibold leading-7 text-slate-900">
+                Land Mark and Coordinates
+                </h2>
+                <p className="mt-1 text-sm leading-6 text-slate-600">
+                </p>
+            </div>
+            <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 ">
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="landmark"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Landmark
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="landmark"
+                      id="landmark"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Landmark"
+                      value={form.landmark}
+                      required
+                      onChange={(e) => updateForm({ landmark: e.target.value })}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="latitude"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Latitude
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="latitude"
+                      id="latitude"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Latitude"
+                      value={form.coordinates.latitude}
+                      required
+                      onChange={(e) => updateForm({ coordinates: { ...form.coordinates, latitude : e.target.value} })}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="longitude"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Longitude
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="longitude"
+                      id="longitude"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="longitude"
+                      value={form.coordinates.longitude}
+                      required
+                      onChange={(e) => updateForm({ coordinates : { ...form.coordinates, longitude: e.target.value} })}
+                    />
+                  </div>
+                </div>
+              </div>
+
+          </div>
+        </div>
+
+
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2 p-2">
+            <div>
+                <h2 className="text-base font-semibold leading-7 text-slate-900">
+                Owner Information
+                </h2>
+                <p className="mt-1 text-sm leading-6 text-slate-600">
+                </p>
+            </div>
+            <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 ">
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="first_name"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  First Name
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="first_name"
+                      id="first_name"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="First Name"
+                      value={form.original_owner.first_name}
+                      required
+                      onChange={(e) => updateForm({ original_owner: { ...form.original_owner, first_name : e.target.value} })}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="latitude"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Last Name
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="last_name"
+                      id="last_name"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Last_name"
+                      value={form.original_owner.last_name}
+                      required
+                      onChange={(e) => updateForm({ original_owner: { ...form.original_owner, last_name : e.target.value} })}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="middle_name"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Middle Name
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="middle_name"
+                      id="middle_name"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Middle Name"
+                      value={form.original_owner.middle_name}
+                      required
+                      onChange={(e) => updateForm({ original_owner : { ...form.original_owner, middle_name: e.target.value} })}
+                    />
+                  </div>
+                </div>
+              </div>
+              
+
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2 p-2">
             <div>
                 <h2 className="text-base font-semibold leading-7 text-slate-900">
                 
