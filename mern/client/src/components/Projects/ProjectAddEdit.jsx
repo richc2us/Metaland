@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import projectSchema from "./projectSchema";
+import { getApiUrl } from "../../api";
 
 export default function ProjectAddEdit() {
   const [form, setForm] = useState(projectSchema);
@@ -13,9 +14,7 @@ export default function ProjectAddEdit() {
       const id = params.id?.toString() || undefined;
       if(!id) return;
       setIsNew(false);
-      const response = await fetch(
-        `http://localhost:5050/projects/${params.id.toString()}`
-      );
+      const response = await fetch(getApiUrl("/projects/" + params.id.toString()));
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
         console.error(message);
@@ -48,7 +47,7 @@ export default function ProjectAddEdit() {
       let response;
       if (isNew) {
         // if we are adding a new record we will POST to /record.
-        response = await fetch("http://localhost:5050/projects", {
+        response = await fetch( getApiUrl("/projects"), {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -57,7 +56,7 @@ export default function ProjectAddEdit() {
         });
       } else {
         // if we are updating a record we will PATCH to /record/:id.
-        response = await fetch(`http://localhost:5050/projects/${params.id}`, {
+        response = await fetch(getApiUrl("/projects/" + params.id) , {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -501,8 +500,52 @@ export default function ProjectAddEdit() {
                   </div>
                 </div>
               </div>
-              
 
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Email Address
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="email"
+                      id="email"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Email Address"
+                      value={form.original_owner.email}
+                      required
+                      onChange={(e) => updateForm({ original_owner : { ...form.original_owner, email: e.target.value} })}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium leading-6 text-slate-900"
+                >
+                  Phone Number
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    <input
+                      type="text"
+                      name="phone"
+                      id="phone"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Phone Number"
+                      value={form.original_owner.phone}
+                      required
+                      onChange={(e) => updateForm({ original_owner : { ...form.original_owner, phone: e.target.value} })}
+                    />
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
 
